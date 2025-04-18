@@ -10,14 +10,14 @@ export default function Frame() {
   const [paymentComplete, setPaymentComplete] = useState(false);
 
   return (
-    <div className="flex flex-col items-center p-4 bg-purple-50 min-h-screen">
+    <div className="flex flex-col items-center p-4 bg-gradient-to-b from-purple-50 to-pink-50 min-h-screen animate-gradient">
       <h1 className="text-4xl font-bold text-purple-600 mb-2">{PROJECT_TITLE}</h1>
       <p className="text-xl text-purple-500 mb-8">{PROJECT_DESCRIPTION}</p>
 
       {!paymentComplete ? (
-        <div className="bg-white p-6 rounded-xl shadow-lg">
-          <h2 className="text-2xl font-bold mb-4 text-center">🎟️ Entry Ticket</h2>
-          <p className="mb-4 text-gray-600">Pay 1 USDC to join the fun!</p>
+        <div className="bg-white p-6 rounded-xl shadow-lg border-4 border-dashed border-purple-300 transform hover:rotate-1 transition-transform">
+          <h2 className="text-2xl font-bold mb-4 text-center animate-bounce">🎟️ Magic Ticket</h2>
+          <p className="mb-4 text-purple-600 text-center">Drop 1 USDC to unleash your meme magic! ✨</p>
           <DaimoPayButton
             appId="pay-demo"
             toChain={optimismUSDC.chainId}
@@ -31,12 +31,12 @@ export default function Frame() {
       ) : (
         <div className="w-full max-w-md">
           <div className="bg-white p-6 rounded-xl shadow-lg">
-            <h2 className="text-2xl font-bold mb-4">🎉 Upload Your Meme!</h2>
+            <h2 className="text-2xl font-bold mb-4 text-center">🎪 Show Time! Upload Your Meme!</h2>
             <button 
-              className="w-full bg-purple-500 text-white py-3 px-6 rounded-lg hover:bg-purple-600 transition"
-              onClick={() => alert('Supabase upload integration coming soon!')}
+              className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-3 px-6 rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-105 font-bold"
+              onClick={() => alert('🎭 Coming soon: Your meme will be immortalized in the Farcaster feed!')}
             >
-              Choose File
+              🎨 Choose Your Masterpiece
             </button>
           </div>
 
