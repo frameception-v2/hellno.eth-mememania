@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import Image from 'next/image';
 import { DaimoPayButton } from '@daimo/pay';
 import { optimismUSDC } from '@daimo/contract';
@@ -22,7 +22,7 @@ export default function Frame() {
       alert('🎉 Meme uploaded! It will appear in the Farcaster feed soon!');
       setMemes(prevMemes => [URL.createObjectURL(file), ...prevMemes]);
     }
-  }, []);
+  }, []); // Empty dependency array since we don't use any external values
 
   return (
     <div className="flex flex-col items-center p-4 bg-gradient-to-b from-purple-50 to-pink-50 min-h-screen animate-gradient">
@@ -77,7 +77,7 @@ export default function Frame() {
                       width={300}
                       height={300}
                       className="rounded-lg"
-                      objectFit="cover"
+                      style={{objectFit: 'cover'}}
                     />
                   </div>
                 ))
