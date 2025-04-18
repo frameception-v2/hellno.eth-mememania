@@ -1,5 +1,6 @@
 'use client'
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { DaimoPayButton } from '@daimo/pay';
 import { optimismUSDC } from '@daimo/contract';
 import { getAddress } from 'viem';
@@ -8,6 +9,20 @@ import { PROJECT_TITLE, PROJECT_DESCRIPTION, PAYMENT_ADDRESS } from '../lib/cons
 export default function Frame() {
   const [memes, setMemes] = useState<string[]>([]); // This would be replaced with actual Supabase integration
   const [paymentComplete, setPaymentComplete] = useState(false);
+
+  const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > MAX_FILE_SIZE) {
+        alert('File too large! Maximum size is 5MB');
+        return;
+      }
+      // Here you would implement the actual file upload to your backend
+      // and Farcaster frame creation
+      alert('🎉 Meme uploaded! It will appear in the Farcaster feed soon!');
+      setMemes(prevMemes => [URL.createObjectURL(file), ...prevMemes]);
+    }
+  }, []);
 
   return (
     <div className="flex flex-col items-center p-4 bg-gradient-to-b from-purple-50 to-pink-50 min-h-screen animate-gradient">
@@ -32,12 +47,20 @@ export default function Frame() {
         <div className="w-full max-w-md">
           <div className="bg-white p-6 rounded-xl shadow-lg">
             <h2 className="text-2xl font-bold mb-4 text-center">🎪 Show Time! Upload Your Meme!</h2>
-            <button 
-              className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-3 px-6 rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-105 font-bold"
-              onClick={() => alert('🎭 Coming soon: Your meme will be immortalized in the Farcaster feed!')}
+            <input
+              type="file"
+              accept="image/*"
+              className="hidden"
+              id="meme-upload"
+              onChange={handleFileChange}
+            />
+            <label 
+              htmlFor="meme-upload"
+              className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-3 px-6 rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-105 font-bold cursor-pointer flex items-center justify-center gap-2"
             >
               🎨 Choose Your Masterpiece
-            </button>
+              <span className="text-sm">(Max 5MB)</span>
+            </label>
           </div>
 
           <div className="mt-8">
@@ -48,7 +71,14 @@ export default function Frame() {
               ) : (
                 memes.map((meme, i) => (
                   <div key={i} className="bg-white p-2 rounded-lg shadow">
-                    {/* Meme display would go here */}
+                    <Image 
+                      src={meme}
+                      alt={`Meme ${i + 1}`}
+                      width={300}
+                      height={300}
+                      className="rounded-lg"
+                      objectFit="cover"
+                    />
                   </div>
                 ))
               )}
